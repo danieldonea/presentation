@@ -5,14 +5,16 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class SolutionOnThread {
 	
-	static int maxNumber = 15003;
-	static int nrOfFigures = 4;
+	static int maxNumber = 15_001; //5447663800
+	static int nrOfFigures = 10;
 	
 	//to solve for more than 10
 	static long modolovalue = (long) Math.pow(10, nrOfFigures);
 	
 	public static void main(String[] args) throws InterruptedException {
 		long startTime = System.nanoTime();
+		
+		// TODO: need a Factory - will cover in part 2
 		EndingFiguresProcessor ef = new EndingFiguresProcessor(maxNumber, nrOfFigures, 
 				SolutionAttributes.getNextNumber());
 		EndingFiguresProcessor ef2 = new EndingFiguresProcessor(maxNumber, nrOfFigures, 
@@ -23,15 +25,15 @@ public class SolutionOnThread {
 				SolutionAttributes.getNextNumber());
 		EndingFiguresProcessor ef5 = new EndingFiguresProcessor(maxNumber, nrOfFigures,
 				SolutionAttributes.getNextNumber());
-		/*EndingFiguresProcessor ef6 = new EndingFiguresProcessor(maxNumber, nrOfFigures,
+		EndingFiguresProcessor ef6 = new EndingFiguresProcessor(maxNumber, nrOfFigures,
 				SolutionAttributes.getNextNumber());
 		EndingFiguresProcessor ef7 = new EndingFiguresProcessor(maxNumber, nrOfFigures,
 				SolutionAttributes.getNextNumber());
 		EndingFiguresProcessor ef8 = new EndingFiguresProcessor(maxNumber, nrOfFigures,
-				SolutionAttributes.getNextNumber()); */
+				SolutionAttributes.getNextNumber()); 
 
 		Thread t = new Thread(ef);
-	    t.start();
+	    t.start();                          
 	    
 	    Thread t2 = new Thread(ef2);
 	    t2.start(); 
@@ -44,7 +46,7 @@ public class SolutionOnThread {
 	    
 	    Thread t5 = new Thread(ef5);
 	    t5.start();
-	    /*
+	    
 	    Thread t6 = new Thread(ef6);
 	    t6.start();
 	    
@@ -52,14 +54,18 @@ public class SolutionOnThread {
 	    t7.start();
 	    
 	    Thread t8 = new Thread(ef8);
-	    t8.start();*/
+	    t8.start();
 	    
 		while(maxNumber != SolutionAttributes.presentNumber.get()){
 			//System.out.println(solutionAttributes.presentNumber.get());
 		}
-		System.out.println("solution is:" + SolutionAttributes.solution);
 		long stopTime = System.nanoTime();
-		System.out.println(stopTime - startTime);
+		System.out.println(stopTime - startTime); 
+		Thread.sleep(2000); // solution without joining threads. Can be extended by thread managing.
+		// Next step: check thread management and resource management
+		// Next step: send processing data at the beginning, not on a need to know basis.
+		System.out.println("solution is:" + SolutionAttributes.solution);
+
 	}
 
 	private static class SolutionAttributes{
